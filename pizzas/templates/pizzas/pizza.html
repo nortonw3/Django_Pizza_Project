@@ -1,0 +1,42 @@
+{% extends "pizzas/base.html" %}
+
+{% block content %}
+
+    <p>Pizza: {{ pizza }}</p>
+    <p>Toppings:</p>
+    <ul>
+        
+        {% for topping in toppings %}
+        <li>
+            <!-- a vertical line(|) represents a template filter
+                -a function that modifies the value in a template variable -->
+            <!-- <p>{{ topping.date_added|date:'M d, Y H:i' }} </p>
+            <!-- the filter linebreaks ensures that the long text entries include line breaks -->
+            <p>{{ topping.text|linebreaks }} </p>
+            
+        </li>
+        {% empty %} <!-- if the list is empty then display message -->
+            <li>There are no entries for this pizza yet.</li>
+        {% endfor %}
+    </ul>
+
+    <p>Comments:</p>
+    <ul>
+
+        {% for comment in comments %}
+        <li>
+            <!-- a vertical line(|) represents a template filter
+                -a function that modifies the value in a template variable -->
+            <p>{{ comment.owner }} posted on: {{ comment.date_added|date:'M d, Y H:i' }} </p>
+            <!-- the filter linebreaks ensures that the long text entries include line breaks -->
+            <p>{{ comment.text|linebreaks }} </p>
+            
+        </li>
+        {% empty %} <!-- if the list is empty then display message -->
+            <li>There are no comments for this pizza yet.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'pizzas:new_comment' pizza.id%}">Add a new Comment</a>
+
+{% endblock content %}

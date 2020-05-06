@@ -1,0 +1,30 @@
+{% extends "pizzas/base.html" %}
+
+{% block content %}
+
+    <!-- includes the pizza_id value in the url, so the view function can associate the new entry
+        with a new topic -->
+
+    <p><a href="{% url 'pizzas:pizza' pizza.id %}">{{ pizza }}</a></p>
+
+    <p>Add a new comment:</p>
+
+    <!-- define an HTML form. the action argument tells the browser where 
+        to send the data submitted in the form -->
+    <form action="{% url 'pizzas:new_comment' pizza.id%}" method='post'>
+
+        <!-- Django uses the template tag {% csrf_token %} to prevent attackers 
+            from using the form to gain unauthorized access to the server -->
+        {% csrf_token %}
+
+        <!-- we only need to include the template variable {{ form.as_p }} for 
+            Django to create all the fields necessary to display the form automatically.
+            the as_p modifier tells django to render all the form elements in paragraph format
+            as a simple way to display the form neatly -->
+        {{ form.as_p }}
+
+        <!-- creat a submit button -->
+        <button name="submit">Add Comment</button>
+    </form>
+
+    {% endblock content %}
